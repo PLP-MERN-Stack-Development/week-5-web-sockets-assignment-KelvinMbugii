@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 // auth routes
-app.use('/api/auth', authRoutes);
+app.use('/api', authRoutes);
 
 
 // API routes
