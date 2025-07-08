@@ -33,6 +33,7 @@ function chatHandlers(io, socket){
             message: messageData.message,
             isPrivate: false,
             timestamp,
+            ready: [sender],
         });
 
         const message = {
@@ -41,11 +42,68 @@ function chatHandlers(io, socket){
             senderId,
             message: dbMessage.message,
             timestamp: dbMessage.timestamp,
+            readBy: dbMessage.readBy,
         };
 
         io.to(GLOBAL_CHAT_ROOM).emit('receive_message', message);
     }catch(error){
         console.server('Error saving or sending message:', error);
+    }
+  });
+
+  // Handle message read
+  socket.on('message:read', async ({ messageId }) => {
+    const username = users[socket.id]?.username;
+    if (!username) return;
+  
+    try {
+      const updatedMessage = await Message.findByIdAndUpdate(
+        messageId,
+        { $addToSet: { readBy: username } }, // avoids duplicates
+        { new: true }
+      );
+  
+      if (updatedMessage) {
+        io.to(GLOBAL_CHAT_ROOM).emit('message:read:update', {
+          messageId,
+          readBy: updatedMessage.readBy,
+        });
+      }
+    } catch (error) {
+      console.error('Failed to update read status:', error);
+    }
+  });
+  
+  // Message react handler
+  socket.on('message:react', async ({ messageId, reactionType }) => {
+    const username = users[socket.id]?.username;
+    if (!username) return;
+  
+    try {
+      const message = await Message.findById(messageId);
+      if (!message) return;
+  
+      
+      if (!message.reactions) message.reactions = {};
+  
+      const currentReactions = message.reactions[reactionType] || [];
+  
+      if (currentReactions.includes(username)) {
+       
+        message.reactions[reactionType] = currentReactions.filter(u => u !== username);
+      } else {
+        
+        message.reactions[reactionType] = [...currentReactions, username];
+      }
+  
+      await message.save();
+  
+      io.to(GLOBAL_CHAT_ROOM).emit('message:react:update', {
+        messageId,
+        reactions: message.reactions,
+      });
+    } catch (err) {
+      console.error('Failed to react to message:', err);
     }
   });
 

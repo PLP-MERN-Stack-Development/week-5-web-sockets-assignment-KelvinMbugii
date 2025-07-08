@@ -116,6 +116,21 @@ export const useSocket = () => {
     socket.on('user_left', onUserLeft);
     socket.on('typing_users', onTypingUsers);
 
+    socket .on("message:read:update", ({ messageId, readBy }) => {
+      setMessages((prev) =>
+        prev.map((msg) =>
+          msg.id === messageId ? {...msg, readBy } : msg
+        )
+      );
+    });
+
+    socket.on("message:react:update", ({ messageId, reactions}) =>{
+      setMessages((prev) =>
+        prev.map((msg) =>
+          msg.id === messageId? {...msg, reactions } : msg
+        )
+      );
+    });
     // Clean up event listeners
     return () => {
       socket.off('connect', onConnect);
@@ -126,6 +141,10 @@ export const useSocket = () => {
       socket.off('user_joined', onUserJoined);
       socket.off('user_left', onUserLeft);
       socket.off('typing_users', onTypingUsers);
+
+      socket.off("message:read:update");
+      socket.off("message:react:update");
+      socket.off("receive_message");
     };
   }, []);
 

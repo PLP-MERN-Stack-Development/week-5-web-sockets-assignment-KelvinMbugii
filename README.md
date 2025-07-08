@@ -1,21 +1,43 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=19894636&assignment_repo_type=AssignmentRepo)
-# Real-Time Chat Application with Socket.io
+#  Real-Time Chat Application
 
-This assignment focuses on building a real-time chat application using Socket.io, implementing bidirectional communication between clients and server.
+A modern full-stack chat application with real-time messaging, file/image upload, typing indicators, private messaging, read receipts, and message reactions — built with **React**, **Socket.io**, **Node.js**, and **MongoDB**.
 
-## Assignment Overview
+---
 
-You will build a chat application with the following features:
-1. Real-time messaging using Socket.io
-2. User authentication and presence
-3. Multiple chat rooms or private messaging
-4. Real-time notifications
-5. Advanced features like typing indicators and read receipts
+## 🔧 Tech Stack
+
+### Frontend
+- React (Vite)
+- Tailwind CSS + ShadCN UI
+- Axios
+- Socket.io Client
+- JWT for authentication
+
+### Backend
+- Node.js + Express
+- MongoDB + Mongoose
+- Socket.io Server
+- Multer (for file uploads)
+- JWT Auth middleware
+
+---
+
+##  Features
+
+- ✅ Real-time chat (global + private)
+- ✅ Typing indicators
+- ✅ Online users list
+- ✅ JWT-based authentication
+- ✅ File & image upload (with preview)
+- ✅ Read receipts
+- ✅ Message reactions 
+- ✅ Clean and responsive UI
+
 
 ## Project Structure
 
 ```
-socketio-chat/
+
 ├── client/                 # React front-end
 │   ├── public/             # Static files
 │   ├── src/                # React source code
@@ -34,45 +56,45 @@ socketio-chat/
 │   ├── utils/              # Utility functions
 │   ├── server.js           # Main server file
 │   └── package.json        # Server dependencies
-└── README.md               # Project documentation
+└── README.md               # Project 
+
 ```
 
-## Getting Started
 
-1. Accept the GitHub Classroom assignment invitation
-2. Clone your personal repository that was created by GitHub Classroom
-3. Follow the setup instructions in the `Week5-Assignment.md` file
-4. Complete the tasks outlined in the assignment
+## Setup Instructions
 
-## Files Included
+### 1. Clone the Repo
+``bash
+https://github.com/PLP-MERN-Stack-Development/week-5-web-sockets-assignment-KelvinMbugii.git
 
-- `Week5-Assignment.md`: Detailed assignment instructions
-- Starter code for both client and server:
-  - Basic project structure
-  - Socket.io configuration templates
-  - Sample components for the chat interface
 
-## Requirements
+### 2. Install Dependencies
+-- Backend
+cd server
+npm install
 
-- Node.js (v18 or higher)
-- npm or yarn
-- Modern web browser
-- Basic understanding of React and Express
+-- Frontend 
+cd Client
+npm install
 
-## Submission
+### 3. Run the App
+cd server
+npm run dev
 
-Your work will be automatically submitted when you push to your GitHub Classroom repository. Make sure to:
 
-1. Complete both the client and server portions of the application
-2. Implement the core chat functionality
-3. Add at least 3 advanced features
-4. Document your setup process and features in the README.md
-5. Include screenshots or GIFs of your working application
-6. Optional: Deploy your application and add the URLs to your README.md
+cd client
+npm run dev
 
-## Resources
+### 4. Authentication
+JWT is used to protect socket connections.
 
-- [Socket.io Documentation](https://socket.io/docs/v4/)
-- [React Documentation](https://react.dev/)
-- [Express.js Documentation](https://expressjs.com/)
-- [Building a Chat Application with Socket.io](https://socket.io/get-started/chat) 
+Each user must log in or register to get a token.
+
+Socket connection includes token in socket.auth.
+
+### Screenshots
+![alt text](image.png)
+
+![alt text](image-1.png)
+
+![alt text](image-2.png)

@@ -11,7 +11,7 @@ const initSocket = require('./socket');
 const { getMessages, getUsers } = require('./controllers/chatController');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/auth')
-
+const uploadRoutes = require("./routes/upload");
 
 // connect to mongodb
 connectDB();
@@ -25,10 +25,12 @@ const server = http.createServer(app);
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 
 // auth routes
 app.use('/api', authRoutes);
+app.use('/api/uploads', uploadRoutes);
 
 
 // API routes
